@@ -89,7 +89,7 @@
             }
 
             try {
-                const response = await fetch('/api/convert', { // Assuming Flask runs on root and api is prefix
+                const response = await fetch('/convert', { // CORRECTED: Removed /api prefix
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

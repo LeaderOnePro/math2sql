@@ -1,16 +1,17 @@
 # API routes for math2sql
 
-from flask import request, jsonify
-from . import app # Assuming app is defined in api/__init__.py or app.py
-from ..core.parser import MathParser
-from ..core.dialects.postgresql import PostgreSQLConverter
-from ..core.dialects.mysql import MySQLConverter
+from flask import request, jsonify, render_template
+# Ensure 'app' is imported correctly from the .app module (api/app.py)
+from .app import app 
+from core.parser import MathParser
+from core.dialects.postgresql import PostgreSQLConverter
+from core.dialects.mysql import MySQLConverter
 # Import other dialect converters as needed
 
 parser = MathParser()
 converters = {
     "postgresql": PostgreSQLConverter(),
-    "mysql": MySQLConverter(),
+    "mysql": MySQLConverter(), # Placeholder, will need implementation
     # Add other dialects here
 }
 
@@ -18,32 +19,40 @@ converters = {
 def convert_math_to_sql():
     data = request.get_json()
     if not data or 'expression' not in data or 'dialect' not in data:
-        return jsonify({'error': 'Missing expression or dialect in request'}), 400
+        return jsonify({'error': '请求中缺少表达式或方言 (Missing expression or dialect in request)'}), 400
 
     expression = data['expression']
-    dialect = data['dialect'].lower()
+    dialect_name = data['dialect'].lower()
 
-    if dialect not in converters:
-        return jsonify({'error': f'Unsupported SQL dialect: {dialect}'}), 400
+    if dialect_name not in converters:
+        return jsonify({'error': f'不支持的SQL方言 (Unsupported SQL dialect): {dialect_name}'}), 400
 
     try:
+        # MathParser.parse is expected to return a sympy expression or raise ValueError
         parsed_expression = parser.parse(expression)
-        # In a real implementation, parsed_expression would be an AST or sympy object
-        # For now, if parser.parse is a placeholder, we might pass the string directly
-        # or a dummy parsed object.
-        # This is a placeholder: actual parsing and conversion needed.
-        if parsed_expression is None: # Assuming parser.parse returns something sympy can use
-             # This is a temporary measure if parser.parse isn't implemented yet
-             # We should ideally ensure parser.parse returns a usable structure
-             # For now, we'll use a string representation for the converter placeholder
-             parsed_expression = expression 
-
-        sql_query = converters[dialect].convert(parsed_expression)
+        
+        # Converters are expected to take the sympy expression and return a SQL string
+        # or raise NotImplementedError for unsupported operations/functions.
+        sql_query = converters[dialect_name].convert(parsed_expression)
         return jsonify({'sql_query': sql_query})
+    
+    except ValueError as e: # Errors from MathParser.parse()
+        app.logger.warn(f"Parsing error for expression '{expression}': {e}")
+        return jsonify({'error': f'数学表达式解析错误 (Parsing error): {str(e)}'}), 400
+    except NotImplementedError as e: # Errors from converter.convert()
+        app.logger.warn(f"Conversion not implemented for part of '{expression}' with dialect '{dialect_name}': {e}")
+        return jsonify({'error': f'SQL转换错误 (Conversion error - not implemented): {str(e)}'}), 501 # 501 Not Implemented
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        # Catch-all for any other unexpected errors during parsing or conversion
+        app.logger.error(f"Unexpected error converting expression '{expression}' for dialect '{dialect_name}': {e}", exc_info=True)
+        return jsonify({'error': '服务器发生意外错误 (An unexpected error occurred on the server)'}), 500
 
-# Placeholder for a root or health check endpoint
 @app.route('/')
-def index():
-    return jsonify({'message': 'Math2SQL API is running!'}) 
+def serve_index_page():
+    """Serves the main index.html page."""
+    return render_template('index.html')
+
+# You might want an API status endpoint separately if needed.
+# @app.route('/api/status')
+# def api_status():
+#    return jsonify({'message': 'Math2SQL API is running!'}) 
