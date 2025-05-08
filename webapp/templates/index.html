@@ -1,95 +1,182 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math2SQL 转换器</title>
-    <!-- Basic styling, can be moved to a CSS file in static/ -->
+    <!-- Pico.css for minimal styling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
-        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
-        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
-        input[type="text"], select, textarea {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
+        :root {
+            /* Base Colors - Sticking to monochrome */
+            --color-black: #1f1f1f; /* Slightly softer black for text */
+            --color-white: #FFFFFF;
+            --color-gray-background: #f7f7f7; /* Very light gray for body background */
+            --color-gray-light: #F0F0F0;      /* Lighter gray for code block */
+            --color-gray-medium-light: #EAEAEA;
+            --color-gray-medium: #C0C0C0;     /* Silver - For input borders */
+            --color-gray-button: #E0E0E0;   /* Button background (淡墨灰色 - light ink gray) */
+            --color-gray-button-hover: #D0D0D0;
+            --color-gray-focus: #A0A0A0;      /* Darker Gray - for focus elements */
+
+            /* Enhanced shadow for more elevation */
+            --custom-card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.06);
+            --custom-card-border-radius: 0.7rem; 
+
+            /* Font stack prioritizing common Chinese sans-serif fonts */
+            --font-family-sans-serif: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
-        textarea { min-height: 100px; }
-        button { 
-            background-color: #007bff; 
-            color: white; 
-            padding: 10px 15px; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 16px;
+
+        body {
+            background-color: var(--color-gray-background);
+            padding-top: 3rem; /* More space at the top */
+            padding-bottom: 3rem;
+            color: var(--color-black);
+            font-family: var(--font-family-sans-serif);
         }
-        button:hover { background-color: #0056b3; }
-        #result_sql { 
-            margin-top: 20px; 
-            padding: 10px; 
-            background-color: #e9ecef; 
-            border: 1px solid #ced4da; 
-            border-radius: 4px; 
-            white-space: pre-wrap; /* Preserves formatting and wraps text */
-            word-wrap: break-word; /* Breaks long words */
+
+        main.container {
+            max-width: 620px; /* Slightly wider card again */
         }
-        .error { color: red; font-weight: bold; }
+
+        article {
+            background-color: var(--color-white);
+            border-radius: var(--custom-card-border-radius);
+            box-shadow: var(--custom-card-shadow);
+            border: 1px solid var(--color-gray-medium-light);
+            padding: 2em 2.2em; /* Adjusted padding */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.8em;
+            color: var(--color-black);
+            font-weight: 600;
+            font-size: 1.8em;
+        }
+        h2 {
+            color: var(--color-black);
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-top: 1.5em; /* More space above h2 */
+            margin-bottom: 0.7em;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.5em;
+            color: var(--color-black);
+            display: block;
+        }
+
+        input[type="text"], select {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-gray-medium);
+            color: var(--color-black);
+            margin-bottom: 1.5em;
+            font-family: var(--font-family-sans-serif); /* Ensure form elements use the new font */
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: var(--color-gray-focus);
+            box-shadow: 0 0 0 2px rgba(160, 160, 160, 0.25); /* Adjusted focus glow */
+            --pico-form-element-focus-color: var(--color-gray-focus) !important; 
+        }
+        
+        button[type="button"] {
+            background-color: var(--color-gray-button);
+            color: var(--color-black);
+            border: 1px solid var(--color-gray-button);
+            font-weight: 500;
+            width: 100%;
+            padding: 0.75em 1em;
+            font-family: var(--font-family-sans-serif);
+            margin-top: 0.5em; /* Space above button */
+        }
+        button[type="button"]:hover {
+            background-color: var(--color-gray-button-hover);
+            border-color: var(--color-gray-button-hover);
+        }
+
+        pre#result_sql {
+            background-color: var(--color-gray-light);
+            border: 1px solid var(--color-gray-medium-light);
+            padding: 1em;
+            border-radius: var(--pico-border-radius);
+            min-height: 110px;
+            color: var(--color-black);
+            font-family: Consolas, "Courier New", monospace; /* Keep code block monospaced */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+
+        .error-message {
+            color: var(--color-black);
+            font-weight: bold;
+            margin-top: 0.7em;
+            font-size: 0.95em;
+        }
+
+        /* Optional: Style for KBD elements if kept, or remove them from HTML for cleaner look */
+        kbd {
+            background-color: var(--pico-muted-background-color, #f9fafb);
+            border: 1px solid var(--pico-muted-border-color, #e5e7eb);
+            border-bottom-width: 2px;
+            padding: 0.2em 0.4em;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>数学公式转 SQL</h1>
-        
-        <div>
-            <label for="math_expression">数学公式:</label>
-            <input type="text" id="math_expression" name="math_expression" placeholder="例如: sin(x)^2 + cos(y)^2">
-        </div>
-        
-        <div>
-            <label for="sql_dialect">选择 SQL 方言:</label>
-            <select id="sql_dialect" name="sql_dialect">
-                <option value="postgresql">PostgreSQL</option>
-                <option value="mysql">MySQL</option>
-                <!-- Add other dialects as they are supported -->
-            </select>
-        </div>
-
-        <!-- Placeholder for variable inputs if needed in the future -->
-        <!-- 
-        <div>
-            <label for="variables">变量 (例如: x=1.5, y=0.7):</label>
-            <input type="text" id="variables" name="variables" placeholder="x=1.5; y=0.7">
-        </div>
-        -->
-        
-        <button onclick="convertToSQL()">转换</button>
-        
-        <h2>生成的 SQL:</h2>
-        <pre id="result_sql">在此处显示SQL...</pre>
-        <p id="error_message" class="error"></p>
-    </div>
+    <main class="container">
+        <article>
+            <header>
+                <h1>数学公式转 SQL</h1>
+            </header>
+            
+            <form id="math2sql_form">
+                <label for="math_expression">数学公式</label>
+                <input type="text" id="math_expression" name="math_expression" placeholder="例如: sin(x)^2 + cos(y)^2" required>
+                
+                <label for="sql_dialect">选择 SQL 方言</label>
+                <select id="sql_dialect" name="sql_dialect" required>
+                    <option value="postgresql" selected>PostgreSQL</option>
+                    <option value="mysql">MySQL</option>
+                    <!-- Add other dialects as they are supported -->
+                </select>
+                
+                <button type="button" onclick="convertToSQL()">转换查询</button>
+            </form>
+            
+            <div id="result_sql_container">
+                <h2>生成的 SQL</h2>
+                <pre id="result_sql">SQL 输出将在此显示...</pre>
+                <p id="error_message" class="error-message"></p>
+            </div>
+        </article>
+    </main>
 
     <script>
         async function convertToSQL() {
-            const expression = document.getElementById('math_expression').value;
-            const dialect = document.getElementById('sql_dialect').value;
+            const expressionInput = document.getElementById('math_expression');
+            const dialectSelect = document.getElementById('sql_dialect');
             const resultP = document.getElementById('result_sql');
             const errorP = document.getElementById('error_message');
 
-            resultP.textContent = '正在转换...';
+            const expression = expressionInput.value;
+            const dialect = dialectSelect.value;
+
+            resultP.textContent = '正在转换中...';
             errorP.textContent = '';
 
             if (!expression) {
                 resultP.textContent = '请输入数学公式。';
+                expressionInput.focus();
                 return;
             }
 
             try {
-                const response = await fetch('/convert', { // CORRECTED: Removed /api prefix
+                const response = await fetch('/convert', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -106,14 +193,27 @@
                     resultP.textContent = data.sql_query;
                 } else {
                     resultP.textContent = '转换失败。';
-                    errorP.textContent = data.error || '未知错误';
+                    errorP.textContent = data.error || '发生未知错误。';
                 }
             } catch (error) {
-                console.error('Error:', error);
-                resultP.textContent = '转换时发生错误。';
-                errorP.textContent = '无法连接到服务器或发生脚本错误。';
+                console.error('Error during conversion:', error);
+                resultP.textContent = '转换过程中发生错误。';
+                errorP.textContent = '无法连接到服务器或发生脚本错误。请检查浏览器控制台获取更多信息。';
             }
         }
+
+        document.getElementById('math2sql_form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+            convertToSQL();
+        });
+
+        // Optional: submit on enter in expression field
+        // document.getElementById('math_expression').addEventListener('keypress', function(event) {
+        //     if (event.key === 'Enter') {
+        //         event.preventDefault(); 
+        //         convertToSQL();
+        //     }
+        // });
     </script>
 </body>
 </html> 
