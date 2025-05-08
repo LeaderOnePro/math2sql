@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math2SQL 转换器</title>
+    <!-- Basic styling, can be moved to a CSS file in static/ -->
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input[type="text"], select, textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea { min-height: 100px; }
+        button { 
+            background-color: #007bff; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px;
+        }
+        button:hover { background-color: #0056b3; }
+        #result_sql { 
+            margin-top: 20px; 
+            padding: 10px; 
+            background-color: #e9ecef; 
+            border: 1px solid #ced4da; 
+            border-radius: 4px; 
+            white-space: pre-wrap; /* Preserves formatting and wraps text */
+            word-wrap: break-word; /* Breaks long words */
+        }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>数学公式转 SQL</h1>
+        
+        <div>
+            <label for="math_expression">数学公式:</label>
+            <input type="text" id="math_expression" name="math_expression" placeholder="例如: sin(x)^2 + cos(y)^2">
+        </div>
+        
+        <div>
+            <label for="sql_dialect">选择 SQL 方言:</label>
+            <select id="sql_dialect" name="sql_dialect">
+                <option value="postgresql">PostgreSQL</option>
+                <option value="mysql">MySQL</option>
+                <!-- Add other dialects as they are supported -->
+            </select>
+        </div>
+
+        <!-- Placeholder for variable inputs if needed in the future -->
+        <!-- 
+        <div>
+            <label for="variables">变量 (例如: x=1.5, y=0.7):</label>
+            <input type="text" id="variables" name="variables" placeholder="x=1.5; y=0.7">
+        </div>
+        -->
+        
+        <button onclick="convertToSQL()">转换</button>
+        
+        <h2>生成的 SQL:</h2>
+        <pre id="result_sql">在此处显示SQL...</pre>
+        <p id="error_message" class="error"></p>
+    </div>
+
+    <script>
+        async function convertToSQL() {
+            const expression = document.getElementById('math_expression').value;
+            const dialect = document.getElementById('sql_dialect').value;
+            const resultP = document.getElementById('result_sql');
+            const errorP = document.getElementById('error_message');
+
+            resultP.textContent = '正在转换...';
+            errorP.textContent = '';
+
+            if (!expression) {
+                resultP.textContent = '请输入数学公式。';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/convert', { // Assuming Flask runs on root and api is prefix
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        expression: expression, 
+                        dialect: dialect 
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultP.textContent = data.sql_query;
+                } else {
+                    resultP.textContent = '转换失败。';
+                    errorP.textContent = data.error || '未知错误';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultP.textContent = '转换时发生错误。';
+                errorP.textContent = '无法连接到服务器或发生脚本错误。';
+            }
+        }
+    </script>
+</body>
+</html> 
