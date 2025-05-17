@@ -29,14 +29,24 @@
 
         body {
             background-color: var(--color-gray-background);
-            padding-top: 3rem; /* More space at the top */
-            padding-bottom: 3rem;
+            margin: 0;
+            min-height: 100vh; /* Ensure full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: var(--color-black);
             font-family: var(--font-family-sans-serif);
+            overflow-y: hidden; /* Prevent body scrolling */
         }
 
         main.container {
             max-width: 720px; /* Wider card for better visual balance */
+            width: 90%; /* Responsive width */
+            height: 90vh; /* Limit height to viewport */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         article {
@@ -44,27 +54,31 @@
             border-radius: var(--custom-card-border-radius);
             box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09), 0 8px 14px rgba(0, 0, 0, 0.07); /* Enhanced shadow for depth */
             border: 1px solid var(--color-gray-medium-light);
-            padding: 2.2em 2.5em; /* Adjusted padding for wider layout */
+            padding: 1.5em 2em; /* Reduced padding to fit content */
+            max-height: 85vh; /* Limit card height */
+            overflow-y: auto; /* Allow scrolling inside card if needed */
+            display: flex;
+            flex-direction: column;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 1.8em;
+            margin-bottom: 1.2em; /* Reduced margin */
             color: var(--color-black);
             font-weight: 600;
-            font-size: 1.8em;
+            font-size: 1.6em; /* Slightly smaller font */
         }
         h2 {
             color: var(--color-black);
-            font-size: 1.1em;
+            font-size: 1em; /* Smaller font */
             font-weight: 500;
-            margin-top: 1.5em; /* More space above h2 */
-            margin-bottom: 0.7em;
+            margin-top: 1em; /* Reduced space above h2 */
+            margin-bottom: 0.5em;
         }
 
         label {
             font-weight: 500;
-            margin-bottom: 0.5em;
+            margin-bottom: 0.3em; /* Reduced margin */
             color: var(--color-black);
             display: block;
         }
@@ -73,8 +87,9 @@
             background-color: var(--color-white);
             border: 1px solid var(--color-gray-medium);
             color: var(--color-black);
-            margin-bottom: 1.5em;
+            margin-bottom: 0.8em; /* Reduced margin */
             font-family: var(--font-family-sans-serif); /* Ensure form elements use the new font */
+            padding: 0.5em; /* Reduced padding */
         }
         input[type="text"]:focus, select:focus {
             border-color: var(--color-gray-focus);
@@ -88,9 +103,9 @@
             border: 1px solid var(--color-gray-button);
             font-weight: 500;
             width: 100%;
-            padding: 0.75em 1em;
+            padding: 0.5em 1em; /* Reduced padding */
             font-family: var(--font-family-sans-serif);
-            margin-top: 0.5em; /* Space above button */
+            margin-top: 0.3em; /* Reduced space above button */
         }
         button[type="button"]:hover {
             background-color: var(--color-gray-button-hover);
@@ -100,14 +115,16 @@
         pre#result_sql {
             background-color: var(--color-gray-light);
             border: 1px solid var(--color-gray-medium-light);
-            padding: 1em;
+            padding: 0.8em; /* Reduced padding */
             border-radius: var(--pico-border-radius);
-            min-height: 110px;
+            min-height: 80px; /* Reduced min-height */
+            max-height: 150px; /* Limit height to prevent overflow */
             color: var(--color-black);
             font-family: Consolas, "Courier New", monospace; /* Keep code block monospaced */
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 0.9em;
+            font-size: 0.85em; /* Smaller font */
+            overflow-y: auto; /* Scroll inside if content is too long */
         }
 
         .error-message {
