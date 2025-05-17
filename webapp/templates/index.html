@@ -33,8 +33,8 @@
             min-height: 100vh; /* Ensure full viewport height */
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Reduce top margin */
-            padding-top: 3vh; /* Significantly reduced top padding */
+            justify-content: flex-start;
+            padding-top: 1vh; /* Further reduced top padding to minimize top blank space */
             align-items: center;
             color: var(--color-black);
             font-family: var(--font-family-sans-serif);
@@ -45,7 +45,8 @@
             max-width: 1600px; /* Even wider card for better proportion on large screens */
             width: 90%; /* Responsive width for larger screens */
             height: auto; /* Allow height to adapt to content */
-            min-height: 60vh; /* Minimum height to ensure visibility */
+            min-height: 50vh; /* Reduced minimum height for tighter layout */
+            margin-top: 1vh; /* Minimal top margin to reduce blank space */
             display: flex;
             justify-content: center;
             align-items: flex-start; /* Align to top */
@@ -56,41 +57,47 @@
             border-radius: var(--custom-card-border-radius);
             box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09), 0 8px 14px rgba(0, 0, 0, 0.07); /* Enhanced shadow for depth */
             border: 1px solid var(--color-gray-medium-light);
-            padding: 1.5em 4em; /* Balanced padding with more horizontal space */
-            max-height: 85vh; /* Limit height but allow more content */
+            padding: 1.2em 1.5em; /* Slightly reduced vertical padding for tighter layout */
+            max-height: 90vh; /* Slightly increased to allow more content visibility */
             overflow-y: auto; /* Allow scrolling inside card if needed */
             display: flex;
             flex-direction: column;
             width: 100%; /* Ensure full width of container */
         }
 
+        article > header {
+            display: none; /* Hide header to remove hat effect */
+        }
+
         h1 {
             text-align: center;
-            margin-bottom: 0.3em; /* Further reduced margin to connect with content */
+            margin-bottom: 0.3em; /* Reduced margin for tighter connection with content */
             color: var(--color-black);
-            font-weight: 600;
+            font-weight: 700; /* Bolder for prominence */
             font-size: 1.8em; /* Larger font for prominence */
         }
         h2 {
             color: var(--color-black);
             font-size: 1.1em; /* Slightly larger font */
             font-weight: 500;
-            margin-top: 1.2em; /* Adjusted space above h2 */
-            margin-bottom: 0.6em;
+            margin-top: 1.2em; /* Adjusted for consistent spacing */
+            margin-bottom: 0.5em; /* Reduced for tighter spacing */
+            align-self: flex-start; /* Ensure left alignment */
         }
 
         label {
             font-weight: 500;
-            margin-bottom: 0.4em; /* Slightly increased margin for breathing room */
+            margin-bottom: 0.3em; /* Reduced for tighter label-to-input spacing */
             color: var(--color-black);
             display: block;
+            align-self: flex-start; /* Ensure left alignment */
         }
 
         input[type="text"], select {
             background-color: var(--color-white);
             border: 1px solid var(--color-gray-medium);
             color: var(--color-black);
-            margin-bottom: 1em; /* Increased margin for spacing */
+            margin-bottom: 0.8em; /* Reduced for consistent vertical rhythm */
             font-family: var(--font-family-sans-serif); /* Ensure form elements use the new font */
             padding: 0.6em; /* Slightly increased padding */
             width: 100%; /* Full width for form elements */
@@ -110,7 +117,8 @@
             width: 100%; /* Full width button */
             padding: 0.7em 1em; /* Comfortable padding */
             font-family: var(--font-family-sans-serif);
-            margin-top: 0.8em; /* Increased space above button */
+            margin-top: 0.8em; /* Consistent spacing above button */
+            margin-bottom: 1.2em; /* Reduced slightly for tighter layout but still separated */
             cursor: pointer; /* Indicate clickable */
             transition: background-color 0.2s; /* Smooth hover transition */
         }
@@ -122,7 +130,7 @@
         pre#result_sql {
             background-color: var(--color-gray-light);
             border: 1px dashed var(--color-gray-medium); /* Dashed border for empty state */
-            padding: 1em; /* Comfortable padding */
+            padding: 0.8em 1em; /* Adjusted padding for content breathing room */
             border-radius: var(--pico-border-radius);
             min-height: 100px; /* Reasonable minimum height */
             max-height: 200px; /* Limit height to prevent overflow */
@@ -136,8 +144,9 @@
         }
         pre#result_sql::before {
             content: "转换后的 SQL 将在此处显示";
-            color: var(--color-gray-medium);
+            color: var(--color-gray-medium); /* Even lighter color for subtlety */
             font-style: italic;
+            font-size: 0.8em; /* Smaller font for placeholder */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -149,12 +158,40 @@
         pre#result_sql:not(:empty)::before {
             display: none; /* Hide placeholder when content exists */
         }
+        /* Custom scrollbar for result area */
+        pre#result_sql::-webkit-scrollbar {
+            width: 8px; /* Slim scrollbar */
+        }
+        pre#result_sql::-webkit-scrollbar-track {
+            background: var(--color-gray-background); /* Track color */
+        }
+        pre#result_sql::-webkit-scrollbar-thumb {
+            background: var(--color-gray-medium); /* Thumb color */
+            border-radius: 4px; /* Rounded thumb */
+        }
+        pre#result_sql::-webkit-scrollbar-thumb:hover {
+            background: var(--color-gray-focus); /* Darker on hover */
+        }
 
         .error-message {
             color: var(--color-black);
             font-weight: bold;
-            margin-top: 0.8em; /* Adjusted spacing */
+            margin-top: 0.5em; /* Reduced for tighter spacing */
             font-size: 0.95em;
+            align-self: flex-start; /* Ensure left alignment */
+        }
+
+        /* Container for form elements to ensure consistent padding */
+        form#math2sql_form > div {
+            padding: 0 1em; /* Breathing room for form content */
+            display: flex;
+            flex-direction: column;
+            align-items: stretch; /* Ensure children stretch to full width */
+        }
+        #result_sql_container {
+            padding: 0 1em; /* Consistent padding with form elements */
+            display: flex;
+            flex-direction: column;
         }
 
         /* Optional: Style for KBD elements if kept, or remove them from HTML for cleaner look */
@@ -170,22 +207,24 @@
 <body>
     <main class="container">
         <article>
-            <header>
-                <h1>数学公式转 SQL</h1>
-            </header>
+            <h1>数学公式转 SQL</h1>
             
             <form id="math2sql_form">
-                <label for="math_expression">数学公式</label>
-                <input type="text" id="math_expression" name="math_expression" placeholder="例如: sin(x)^2 + cos(y)^2" required>
-                
-                <label for="sql_dialect">选择 SQL 方言</label>
-                <select id="sql_dialect" name="sql_dialect" required>
-                    <option value="postgresql" selected>PostgreSQL</option>
-                    <option value="mysql">MySQL</option>
-                    <!-- Add other dialects as they are supported -->
-                </select>
-                
-                <button type="button" onclick="convertToSQL()">转换查询</button>
+                <div>
+                    <label for="math_expression">数学公式</label>
+                    <input type="text" id="math_expression" name="math_expression" placeholder="例如: sin(x)^2 + cos(y)^2" required>
+                </div>
+                <div>
+                    <label for="sql_dialect">选择 SQL 方言</label>
+                    <select id="sql_dialect" name="sql_dialect" required>
+                        <option value="postgresql" selected>PostgreSQL</option>
+                        <option value="mysql">MySQL</option>
+                        <!-- Add other dialects as they are supported -->
+                    </select>
+                </div>
+                <div>
+                    <button type="button" onclick="convertToSQL()">转换查询</button>
+                </div>
             </form>
             
             <div id="result_sql_container">
