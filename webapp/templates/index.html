@@ -33,7 +33,8 @@
             min-height: 100vh; /* Ensure full viewport height */
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Reduce top margin */
+            padding-top: 3vh; /* Significantly reduced top padding */
             align-items: center;
             color: var(--color-black);
             font-family: var(--font-family-sans-serif);
@@ -41,12 +42,13 @@
         }
 
         main.container {
-            max-width: 1000px; /* Significantly wider card for a horizontal layout */
-            width: 95%; /* Responsive width, slightly wider */
-            height: 80vh; /* Reduced height to emphasize horizontal design */
+            max-width: 1600px; /* Even wider card for better proportion on large screens */
+            width: 90%; /* Responsive width for larger screens */
+            height: auto; /* Allow height to adapt to content */
+            min-height: 60vh; /* Minimum height to ensure visibility */
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Align to top */
         }
 
         article {
@@ -54,31 +56,32 @@
             border-radius: var(--custom-card-border-radius);
             box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09), 0 8px 14px rgba(0, 0, 0, 0.07); /* Enhanced shadow for depth */
             border: 1px solid var(--color-gray-medium-light);
-            padding: 1.2em 2.5em; /* Reduced vertical padding, increased horizontal padding for wider look */
-            max-height: 75vh; /* Reduced height limit for a wider, shorter card */
+            padding: 1.5em 4em; /* Balanced padding with more horizontal space */
+            max-height: 85vh; /* Limit height but allow more content */
             overflow-y: auto; /* Allow scrolling inside card if needed */
             display: flex;
             flex-direction: column;
+            width: 100%; /* Ensure full width of container */
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 1.2em; /* Reduced margin */
+            margin-bottom: 0.3em; /* Further reduced margin to connect with content */
             color: var(--color-black);
             font-weight: 600;
-            font-size: 1.6em; /* Slightly smaller font */
+            font-size: 1.8em; /* Larger font for prominence */
         }
         h2 {
             color: var(--color-black);
-            font-size: 1em; /* Smaller font */
+            font-size: 1.1em; /* Slightly larger font */
             font-weight: 500;
-            margin-top: 1em; /* Reduced space above h2 */
-            margin-bottom: 0.5em;
+            margin-top: 1.2em; /* Adjusted space above h2 */
+            margin-bottom: 0.6em;
         }
 
         label {
             font-weight: 500;
-            margin-bottom: 0.3em; /* Reduced margin */
+            margin-bottom: 0.4em; /* Slightly increased margin for breathing room */
             color: var(--color-black);
             display: block;
         }
@@ -87,9 +90,11 @@
             background-color: var(--color-white);
             border: 1px solid var(--color-gray-medium);
             color: var(--color-black);
-            margin-bottom: 0.8em; /* Reduced margin */
+            margin-bottom: 1em; /* Increased margin for spacing */
             font-family: var(--font-family-sans-serif); /* Ensure form elements use the new font */
-            padding: 0.5em; /* Reduced padding */
+            padding: 0.6em; /* Slightly increased padding */
+            width: 100%; /* Full width for form elements */
+            box-sizing: border-box; /* Ensure padding is included in width */
         }
         input[type="text"]:focus, select:focus {
             border-color: var(--color-gray-focus);
@@ -98,39 +103,57 @@
         }
         
         button[type="button"] {
-            background-color: var(--color-gray-button);
-            color: var(--color-black);
-            border: 1px solid var(--color-gray-button);
+            background-color: #4a90e2; /* Primary blue color for visibility */
+            color: var(--color-white); /* White text for contrast */
+            border: 1px solid #3a80d2; /* Slightly darker border */
             font-weight: 500;
-            width: 100%;
-            padding: 0.5em 1em; /* Reduced padding */
+            width: 100%; /* Full width button */
+            padding: 0.7em 1em; /* Comfortable padding */
             font-family: var(--font-family-sans-serif);
-            margin-top: 0.3em; /* Reduced space above button */
+            margin-top: 0.8em; /* Increased space above button */
+            cursor: pointer; /* Indicate clickable */
+            transition: background-color 0.2s; /* Smooth hover transition */
         }
         button[type="button"]:hover {
-            background-color: var(--color-gray-button-hover);
-            border-color: var(--color-gray-button-hover);
+            background-color: #3a80d2; /* Darker blue on hover */
+            border-color: #2a70c2;
         }
 
         pre#result_sql {
             background-color: var(--color-gray-light);
-            border: 1px solid var(--color-gray-medium-light);
-            padding: 0.8em; /* Reduced padding */
+            border: 1px dashed var(--color-gray-medium); /* Dashed border for empty state */
+            padding: 1em; /* Comfortable padding */
             border-radius: var(--pico-border-radius);
-            min-height: 80px; /* Reduced min-height */
-            max-height: 150px; /* Limit height to prevent overflow */
+            min-height: 100px; /* Reasonable minimum height */
+            max-height: 200px; /* Limit height to prevent overflow */
             color: var(--color-black);
             font-family: Consolas, "Courier New", monospace; /* Keep code block monospaced */
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 0.85em; /* Smaller font */
+            font-size: 0.9em; /* Readable font size */
             overflow-y: auto; /* Scroll inside if content is too long */
+            position: relative; /* For pseudo-element positioning */
+        }
+        pre#result_sql::before {
+            content: "转换后的 SQL 将在此处显示";
+            color: var(--color-gray-medium);
+            font-style: italic;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+            text-align: center;
+            pointer-events: none; /* Ensure it doesn't interfere with interaction */
+        }
+        pre#result_sql:not(:empty)::before {
+            display: none; /* Hide placeholder when content exists */
         }
 
         .error-message {
             color: var(--color-black);
             font-weight: bold;
-            margin-top: 0.7em;
+            margin-top: 0.8em; /* Adjusted spacing */
             font-size: 0.95em;
         }
 
