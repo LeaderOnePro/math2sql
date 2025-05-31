@@ -1,0 +1,205 @@
+:root {
+    /* Minimalist Tech Style - Color Palette (Dark Theme) */
+    --tech-bg-color: #121212;
+    --tech-surface-color: #1E1E1E;
+    --tech-text-primary-color: #E0E0E0;
+    --tech-text-secondary-color: #A0A0A0;
+    --tech-accent-color: #03DAC6;
+    --tech-error-color: #CF6679;
+    --tech-border-color: #383838;
+
+    /* Base Typography */
+    --tech-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body.mdc-typography {
+    font-family: var(--tech-font-family);
+    background-color: var(--tech-bg-color);
+    color: var(--tech-text-primary-color);
+    margin: 0;
+
+    background-image:
+        linear-gradient(to right, rgba(200, 200, 200, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(200, 200, 200, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.page-content-wrapper {
+    padding: 24px; /* Increased from 16px */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mdc-card {
+    background-color: var(--tech-surface-color);
+    border-radius: 4px;
+    border: 1px solid var(--tech-border-color);
+    box-shadow: none;
+}
+
+.card-content-wrapper {
+    padding: 32px; /* Increased from 24px */
+    color: var(--tech-text-primary-color);
+}
+
+.card-content-wrapper h1.mdc-typography--headline4 {
+    color: var(--tech-text-primary-color);
+    text-align: center;
+    margin-bottom: 40px; /* Increased from 32px */
+    font-weight: 600;
+}
+
+.form-field-wrapper {
+    width: 100%;
+    margin-bottom: 24px; /* Increased from 16px */
+}
+
+/* --- MDC Text Field Refinements --- */
+.mdc-text-field--outlined {
+    --mdc-theme-primary: var(--tech-accent-color);
+    border-radius: 4px;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__leading,
+.mdc-text-field--outlined .mdc-notched-outline__notch,
+.mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-color: var(--tech-border-color);
+}
+
+.mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__leading,
+.mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__notch,
+.mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__trailing {
+    border-color: var(--tech-accent-color);
+    border-width: 2px;
+}
+
+.mdc-text-field--outlined .mdc-text-field__input {
+    color: var(--tech-text-primary-color);
+}
+
+.mdc-text-field--outlined .mdc-floating-label {
+    color: var(--tech-text-secondary-color);
+}
+
+.mdc-text-field--outlined.mdc-text-field--focused .mdc-floating-label,
+.mdc-text-field--outlined .mdc-floating-label--float-above {
+    color: var(--tech-accent-color);
+}
+
+
+/* --- MDC Select Refinements --- */
+.mdc-select--outlined {
+    --mdc-theme-primary: var(--tech-accent-color);
+    border-radius: 4px;
+}
+
+.mdc-select--outlined .mdc-notched-outline__leading,
+.mdc-select--outlined .mdc-notched-outline__notch,
+.mdc-select--outlined .mdc-notched-outline__trailing {
+    border-color: var(--tech-border-color);
+}
+
+.mdc-select--outlined.mdc-select--focused .mdc-notched-outline__leading,
+.mdc-select--outlined.mdc-select--focused .mdc-notched-outline__notch,
+.mdc-select--outlined.mdc-select--focused .mdc-notched-outline__trailing {
+    border-color: var(--tech-accent-color);
+    border-width: 2px;
+}
+
+.mdc-select--outlined .mdc-select__selected-text {
+    color: var(--tech-text-primary-color);
+}
+
+.mdc-select--outlined .mdc-floating-label {
+    color: var(--tech-text-secondary-color);
+}
+
+.mdc-select--outlined.mdc-select--focused .mdc-floating-label,
+.mdc-select--outlined .mdc-floating-label--float-above {
+    color: var(--tech-accent-color);
+}
+
+.mdc-menu-surface.mdc-select__menu {
+    background-color: var(--tech-surface-color);
+    border: 1px solid var(--tech-border-color);
+    border-radius: 4px;
+}
+
+.mdc-list-item .mdc-list-item__text {
+    color: var(--tech-text-primary-color);
+}
+
+.mdc-list-item--selected .mdc-list-item__text {
+    color: var(--tech-accent-color);
+}
+
+.mdc-list-item:hover .mdc-list-item__text {
+    color: var(--tech-accent-color);
+}
+.mdc-list-item--selected:hover .mdc-list-item__text {
+    color: var(--tech-accent-color);
+}
+
+
+.mdc-select__dropdown-icon-graphic .mdc-select__dropdown-icon-inactive,
+.mdc-select__dropdown-icon-graphic .mdc-select__dropdown-icon-active {
+    fill: var(--tech-text-secondary-color);
+}
+
+/* --- MDC Button Refinements --- */
+.form-actions-wrapper {
+    margin-top: 32px;  /* Added margin-top */
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.mdc-button--raised {
+    background-color: var(--tech-accent-color);
+    color: var(--tech-bg-color);
+    border-radius: 4px;
+    box-shadow: none;
+    border: 1px solid var(--tech-accent-color);
+}
+
+.mdc-button--raised:hover, .mdc-button--raised:focus {
+    background-color: color-mix(in srgb, var(--tech-accent-color) 90%, #ffffff);
+    box-shadow: none;
+    border-color: color-mix(in srgb, var(--tech-accent-color) 90%, #ffffff);
+    color: var(--tech-bg-color);
+}
+
+.mdc-button--raised .mdc-button__label {
+   /* color: var(--tech-bg-color); Is inherited */
+}
+
+
+/* --- Result Area --- */
+#result_sql_container {
+    margin-top: 40px; /* Increased from 24px */
+}
+
+#result_sql_container h2.mdc-typography--headline6 {
+    color: var(--tech-text-primary-color);
+    margin-bottom: 16px; /* Increased from 12px */
+    font-weight: 500;
+}
+
+pre#result_sql {
+    border: 1px solid var(--tech-border-color);
+    padding: 20px; /* Increased from 16px */
+    border-radius: 4px;
+    min-height: 120px; /* Increased from 100px */
+    background-color: var(--tech-bg-color);
+    color: var(--tech-text-secondary-color);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+}
+
+p#error_message.mdc-typography--caption {
+    color: var(--tech-error-color);
+    margin-top: 12px; /* Increased from 8px */
+    min-height: 1.2em; /* Ensure space even when empty */
+}

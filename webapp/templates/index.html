@@ -6,16 +6,17 @@
     <title>Math2SQL</title>
     <!-- Material Components Web CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minimal_tech.css') }}">
 </head>
 <body class="mdc-typography">
     <main class="container">
-        <div style="padding: 16px;">
+        <div class="page-content-wrapper">
             <div class="mdc-card">
-                <div style="padding: 16px;"> <!-- Added padding around card content -->
-                    <h1 class="mdc-typography--headline4" style="text-align: center; margin-bottom: 24px;">数学公式转 SQL</h1>
+                <div class="card-content-wrapper"> <!-- Added padding around card content -->
+                    <h1 class="mdc-typography--headline4">数学公式转 SQL</h1>
             
                     <form id="math2sql_form">
-                        <div class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField" style="width: 100%; margin-bottom: 16px;">
+                        <div class="mdc-text-field mdc-text-field--outlined form-field-wrapper" data-mdc-auto-init="MDCTextField">
                             <input type="text" class="mdc-text-field__input" id="math_expression" name="math_expression" required>
                             <div class="mdc-notched-outline">
                                 <div class="mdc-notched-outline__leading"></div>
@@ -25,7 +26,7 @@
                                 <div class="mdc-notched-outline__trailing"></div>
                             </div>
                         </div>
-                        <div class="mdc-select mdc-select--outlined" data-mdc-auto-init="MDCSelect" id="sql_dialect" style="width: 100%; margin-bottom: 16px;">
+                        <div class="mdc-select mdc-select--outlined form-field-wrapper" data-mdc-auto-init="MDCSelect" id="sql_dialect">
                             <div class="mdc-select__anchor" role="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="sql-dialect-label">
                                 <span class="mdc-select__ripple"></span>
                                 <span class="mdc-notched-outline">
@@ -66,7 +67,7 @@
                                 <div class="mdc-notched-outline__trailing"></div>
                             </div>
                         </div>
-                        <div style="margin-bottom: 16px; text-align: center;">
+                        <div class="form-actions-wrapper">
                             <button class="mdc-button mdc-button--raised" onclick="convertToSQL()">
                                 <span class="mdc-button__ripple"></span>
                                 <span class="mdc-button__label">转换查询</span>
@@ -74,10 +75,10 @@
                         </div>
                     </form>
             
-                    <div id="result_sql_container" style="margin-top: 24px;">
-                        <h2 class="mdc-typography--headline6" style="margin-bottom: 8px;">生成的 SQL</h2>
-                        <pre id="result_sql" style="border: 1px solid var(--mdc-theme-on-surface, #0000001f); padding: 16px; border-radius: 4px; min-height: 100px; background-color: #f5f5f5; overflow-x: auto;">SQL 输出将在此显示...</pre>
-                        <p id="error_message" class="error-message mdc-typography--caption" style="color: var(--mdc-theme-error, #b00020); margin-top: 8px;"></p>
+                    <div id="result_sql_container">
+                        <h2 class="mdc-typography--headline6">生成的 SQL</h2>
+                        <pre id="result_sql">SQL 输出将在此显示...</pre>
+                        <p id="error_message" class="error-message mdc-typography--caption"></p>
                     </div>
                 </div> <!-- End padding div -->
             </div> <!-- End mdc-card -->
