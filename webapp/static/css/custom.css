@@ -12,7 +12,7 @@
 
     /* Enhanced shadow for more elevation */
     --custom-card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.06);
-    --custom-card-border-radius: 0.7rem; 
+    --custom-card-border-radius: 0.7rem;
 
     /* Font stack prioritizing common Chinese sans-serif fonts */
     --font-family-sans-serif: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -96,7 +96,7 @@ input[type="text"], select {
 input[type="text"]:focus, select:focus {
     border-color: var(--color-gray-focus);
     box-shadow: 0 0 0 2px rgba(160, 160, 160, 0.25); /* Adjusted focus glow */
-    --pico-form-element-focus-color: var(--color-gray-focus) !important; 
+    --pico-form-element-focus-color: var(--color-gray-focus) !important;
 }
 
 button[type="button"] {
