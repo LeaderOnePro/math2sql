@@ -42,7 +42,7 @@ Inspired by a tweet showcasing math operations in Postgres, this tool aims to pr
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/LeaderOnePro/math2sql.git
     cd math2sql
     ```
 2.  **Create and activate a virtual environment:**
