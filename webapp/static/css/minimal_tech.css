@@ -203,3 +203,23 @@ p#error_message.mdc-typography--caption {
     margin-top: 12px; /* Increased from 8px */
     min-height: 1.2em; /* Ensure space even when empty */
 }
+
+/* --- Ripple Customization for MDC Select --- */
+.mdc-select__anchor {
+    overflow: hidden; /* Ensure ripple is contained */
+    position: relative; /* Ripples need a positioned ancestor */
+}
+
+/*
+.mdc-select__ripple::before,
+.mdc-select__ripple::after {
+    background-color: var(--tech-accent-color);
+    opacity: 0.1;
+}
+*/
+
+/* Fallback: Option to completely disable the ripple on the select component - NOW ACTIVE */
+.mdc-select__ripple::before,
+.mdc-select__ripple::after {
+    display: none !important;
+}
