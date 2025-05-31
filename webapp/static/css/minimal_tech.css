@@ -1,14 +1,14 @@
 :root {
-    /* Minimalist Tech Style - Color Palette (Dark Theme) */
-    --tech-bg-color: #121212;
-    --tech-surface-color: #1E1E1E;
-    --tech-text-primary-color: #E0E0E0;
-    --tech-text-secondary-color: #A0A0A0;
-    --tech-accent-color: #03DAC6;
-    --tech-error-color: #CF6679;
-    --tech-border-color: #383838;
+    /* Minimalist Tech Style - Color Palette (Light Theme) */
+    --tech-bg-color: #FFFFFF;                 /* Pure white */
+    --tech-surface-color: #FFFFFF;            /* Pure white for cards */
+    --tech-text-primary-color: #212121;      /* Very dark gray (near black) for primary text */
+    --tech-text-secondary-color: #757575;     /* Medium gray for secondary text */
+    --tech-accent-color: #03DAC6;             /* Teal accent - keep as is or similar */
+    --tech-error-color: #D32F2F;              /* More vibrant red for light theme errors */
+    --tech-border-color: #E0E0E0;             /* Light gray for borders */
 
-    /* Base Typography */
+    /* Base Typography - Font family remains the same */
     --tech-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -19,8 +19,8 @@ body.mdc-typography {
     margin: 0;
 
     background-image:
-        linear-gradient(to right, rgba(200, 200, 200, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(200, 200, 200, 0.03) 1px, transparent 1px);
+        linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
