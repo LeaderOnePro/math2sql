@@ -4,50 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math2SQL</title>
-    <!-- Pico.css for minimal styling -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <!-- Material Components Web CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.css">
 </head>
-<body>
+<body class="mdc-typography">
     <main class="container">
-        <article>
-            <h1>数学公式转 SQL</h1>
+        <div style="padding: 16px;">
+            <div class="mdc-card">
+                <div style="padding: 16px;"> <!-- Added padding around card content -->
+                    <h1 class="mdc-typography--headline4" style="text-align: center; margin-bottom: 24px;">数学公式转 SQL</h1>
             
-            <form id="math2sql_form">
-                <div>
-                    <label for="math_expression">数学公式</label>
-                    <input type="text" id="math_expression" name="math_expression" placeholder="例如: sin(x)^2 + cos(y)^2" required>
-                </div>
-                <div>
-                    <label for="sql_dialect">选择 SQL 方言</label>
-                    <select id="sql_dialect" name="sql_dialect" required>
-                        <option value="postgresql" selected>PostgreSQL</option>
-                        <option value="mysql">MySQL</option>
-                        <!-- Add other dialects as they are supported -->
-                    </select>
-                </div>
-                <div>
-                    <button type="button" onclick="convertToSQL()">转换查询</button>
-                </div>
-            </form>
+                    <form id="math2sql_form">
+                        <div class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField" style="width: 100%; margin-bottom: 16px;">
+                            <input type="text" class="mdc-text-field__input" id="math_expression" name="math_expression" required>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="math_expression" class="mdc-floating-label">数学公式</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div class="mdc-select mdc-select--outlined" data-mdc-auto-init="MDCSelect" id="sql_dialect" style="width: 100%; margin-bottom: 16px;">
+                            <div class="mdc-select__anchor" role="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="sql-dialect-label">
+                                <span class="mdc-select__ripple"></span>
+                                <span class="mdc-notched-outline">
+                                    <span class="mdc-notched-outline__leading"></span>
+                                    <span class="mdc-notched-outline__notch">
+                                        <span id="sql-dialect-label" class="mdc-floating-label">选择 SQL 方言</span>
+                                    </span>
+                                    <span class="mdc-notched-outline__trailing"></span>
+                                </span>
+                                <span class="mdc-select__selected-text-container">
+                                    <span class="mdc-select__selected-text"></span>
+                                </span>
+                                <span class="mdc-select__dropdown-icon">
+                                    <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5" focusable="false">
+                                        <polygon class="mdc-select__dropdown-icon-inactive" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
+                                        <polygon class="mdc-select__dropdown-icon-active" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                                <ul class="mdc-list" role="listbox" aria-label="SQL dialect select">
+                                    <li class="mdc-list-item mdc-list-item--selected" data-value="postgresql" aria-selected="true">
+                                        <span class="mdc-list-item__ripple"></span>
+                                        <span class="mdc-list-item__text">PostgreSQL</span>
+                                    </li>
+                                    <li class="mdc-list-item" data-value="mysql">
+                                        <span class="mdc-list-item__ripple"></span>
+                                        <span class="mdc-list-item__text">MySQL</span>
+                                    </li>
+                                    <!-- Add other dialects as they are supported -->
+                                </ul>
+                            </div>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                     <!-- The label is now part of the anchor for outlined select -->
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 16px; text-align: center;">
+                            <button class="mdc-button mdc-button--raised" onclick="convertToSQL()">
+                                <span class="mdc-button__ripple"></span>
+                                <span class="mdc-button__label">转换查询</span>
+                            </button>
+                        </div>
+                    </form>
             
-            <div id="result_sql_container">
-                <h2>生成的 SQL</h2>
-                <pre id="result_sql">SQL 输出将在此显示...</pre>
-                <p id="error_message" class="error-message"></p>
-            </div>
-        </article>
+                    <div id="result_sql_container" style="margin-top: 24px;">
+                        <h2 class="mdc-typography--headline6" style="margin-bottom: 8px;">生成的 SQL</h2>
+                        <pre id="result_sql" style="border: 1px solid var(--mdc-theme-on-surface, #0000001f); padding: 16px; border-radius: 4px; min-height: 100px; background-color: #f5f5f5; overflow-x: auto;">SQL 输出将在此显示...</pre>
+                        <p id="error_message" class="error-message mdc-typography--caption" style="color: var(--mdc-theme-error, #b00020); margin-top: 8px;"></p>
+                    </div>
+                </div> <!-- End padding div -->
+            </div> <!-- End mdc-card -->
+        </div> <!-- End main content padding div -->
     </main>
 
     <script>
         async function convertToSQL() {
             const expressionInput = document.getElementById('math_expression');
-            const dialectSelect = document.getElementById('sql_dialect');
+            const dialectSelectElement = document.getElementById('sql_dialect'); // Element is a div
             const resultP = document.getElementById('result_sql');
             const errorP = document.getElementById('error_message');
 
             const expression = expressionInput.value;
-            const dialect = dialectSelect.value;
+
+            // Get the MDCSelect instance and its value
+            let dialect = '';
+            if (dialectSelectElement && dialectSelectElement.MDCSelect) {
+                dialect = dialectSelectElement.MDCSelect.value;
+            } else {
+                console.error('MDCSelect component instance not found on element with id "sql_dialect". Ensure MDC autoInit has run and the component is correctly initialized.');
+                resultP.textContent = '错误: SQL方言选择器未正确初始化。';
+                errorP.textContent = '请尝试刷新页面。';
+                return; // Stop execution if the select component isn't ready
+            }
 
             resultP.textContent = '正在转换中...';
             errorP.textContent = '';
@@ -97,6 +152,23 @@
         //         convertToSQL();
         //     }
         // });
+    </script>
+    <!-- Material Components Web JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.js" async></script>
+    <script>
+      // Initialize MDC Web components
+      // Wait for the MDC library to load if it hasn't already.
+      if (window.mdc) {
+        window.mdc.autoInit();
+      } else {
+        // Fallback or listener if mdc is loaded asynchronously and not yet available
+        const mdcScript = document.querySelector('script[src*="material-components-web"]');
+        if (mdcScript) {
+          mdcScript.addEventListener('load', () => {
+            window.mdc.autoInit();
+          });
+        }
+      }
     </script>
 </body>
 </html> 
