@@ -46,6 +46,8 @@ Inspired by a tweet showcasing math operations in Postgres, this tool aims to pr
     cd math2sql
     ```
 2.  **Create and activate a virtual environment:**
+
+    **Using `venv` (recommended for most Python projects):**
     ```bash
     python -m venv venv
     ```
@@ -57,6 +59,16 @@ Inspired by a tweet showcasing math operations in Postgres, this tool aims to pr
         ```bash
         source venv/bin/activate
         ```
+
+    **Using `conda` (if you prefer Anaconda/Miniconda):**
+    If you don't have a conda environment yet, create one (replace `math2sql_env` with your preferred name and `python=3.x` with your desired Python version):
+    ```bash
+    conda create -n math2sql_env python=3.x
+    ```
+    Activate the conda environment:
+    ```bash
+    conda activate math2sql_env
+    ```
 3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
