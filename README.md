@@ -61,14 +61,15 @@ Inspired by a tweet showcasing math operations in Postgres, this tool aims to pr
         ```
 
     **Using `conda` (if you prefer Anaconda/Miniconda):**
-    If you don't have a conda environment yet, create one (replace `math2sql_env` with your preferred name and `python=3.x` with your desired Python version):
+    If you don't have a conda environment yet, create one:
     ```bash
-    conda create -n math2sql_env python=3.x
+    conda create -n math2sql python=3.10
     ```
     Activate the conda environment:
     ```bash
-    conda activate math2sql_env
+    conda activate math2sql
     ```
+    *Note: You can specify a Python version greater than or equal to 3.10 (e.g., `python=3.11`).*
 3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
