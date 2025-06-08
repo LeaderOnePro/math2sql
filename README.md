@@ -1,109 +1,106 @@
 # Math2SQL
 
-Converts mathematical expressions into SQL queries for various SQL dialects.
+**Math2SQL** is a robust tool that automatically translates advanced mathematical expressions into SQL queries, supporting multiple database dialects. It bridges the gap between mathematical notation and database computation.
 
-## Project Goal
+---
 
-Inspired by a tweet showcasing math operations in Postgres, this tool aims to provide a more general solution for translating mathematical formulas (including those from higher mathematics) into SQL.
+## Key Features
 
-## Current Features
+- **Advanced Mathematical Parsing**: Accurately parses complex formulas involving trigonometric functions, logarithms, exponentials, nested expressions, and more.
+- **Multi-Dialect SQL Support**: Currently supports PostgreSQL and MySQL, with an architecture designed for easy expansion.
+- **Instant Conversion**: Input a mathematical formula, select your SQL dialect, and receive the translated query instantly.
+- **Clean Web Interface**: A minimalist and intuitive web UI for a smooth user experience and easy testing.
+- **Extensible Architecture**: The core parsing logic is decoupled from the SQL conversion modules, making it straightforward to add support for new database dialects or mathematical functions.
 
-- Basic Flask API structure (`api/app.py`, `api/routes.py`).
-- Core structure for mathematical expression parsing and SQL conversion (`core/parser.py`, `core/converter.py`).
-- Initial dialect support for MySQL and PostgreSQL (`core/dialects/mysql.py`, `core/dialects/postgresql.py`).
-- Basic web interface template (`webapp/templates/index.html`).
-
-## Features (Planned)
-
--   Implement robust parsing of complex mathematical expressions.
--   Add support for a wide range of common mathematical functions (trigonometric, logarithmic, exponential, etc.).
--   Explore support for advanced mathematical concepts (e.g., derivatives, integrals - ambitious goal).
--   Expand SQL dialect support (e.g., SQL Server, Oracle, SQLite).
--   Develop a functional web interface for easy conversion.
--   Implement a command-line interface for scripting and batch processing.
+---
 
 ## Project Structure
 
--   `core/`: Core parsing and conversion logic.
-    -   `parser.py`: Mathematical expression parser.
-    -   `converter.py`: Base class for SQL conversion.
-    -   `dialects/`: Specific SQL dialect converters (`mysql.py`, `postgresql.py`).
--   `api/`: Flask-based web API.
-    -   `app.py`: Flask app setup.
-    -   `routes.py`: API endpoints.
--   `webapp/`: Frontend.
-    -   `templates/index.html`: Main web page for the application.
--   `main.py`: Potential CLI entry point (currently not implemented).
--   `requirements.txt`: Python dependencies.
--   `.gitignore`: Specifies intentionally untracked files that Git should ignore.
--   `README.md`: This file.
+```
+├── api/                # Flask backend API
+│   ├── app.py          # Flask app initialization & config
+│   └── routes.py       # API endpoint definitions
+│
+├── core/               # Core engine for parsing and conversion
+│   ├── parser.py       # Mathematical expression parser (powered by Sympy)
+│   ├── converter.py    # Base class for SQL converters
+│   └── dialects/       # SQL dialect-specific converters
+│       ├── postgresql.py
+│       └── mysql.py
+│
+├── webapp/             # Frontend application
+│   ├── templates/
+│   │   └── index.html  # Main HTML page
+│   └── static/         # For future CSS/JS files
+│
+├── .gitignore          # Git ignore rules
+├── main.py             # Entry point for CLI (optional)
+├── README.md           # This file
+└── requirements.txt    # Python dependencies
+```
 
-## Setup and Running
+---
 
-1.  **Clone the repository:**
+## Quick Start
+
+1.  **Clone the Repository**
     ```bash
     git clone https://github.com/LeaderOnePro/math2sql.git
     cd math2sql
     ```
-2.  **Create and activate a virtual environment:**
 
-    **Using `venv` (recommended for most Python projects):**
+2.  **Create and Activate a Virtual Environment**
     ```bash
     python -m venv venv
+    # On Windows:
+    venv\Scripts\activate
+    # On macOS/Linux:
+    source venv/bin/activate
     ```
-    -   On Windows:
-        ```bash
-        .\venv\Scripts\activate
-        ```
-    -   On macOS/Linux:
-        ```bash
-        source venv/bin/activate
-        ```
 
-    **Using `conda` (if you prefer Anaconda/Miniconda):**
-    If you don't have a conda environment yet, create one:
-    ```bash
-    conda create -n math2sql python=3.10
-    ```
-    Activate the conda environment:
-    ```bash
-    conda activate math2sql
-    ```
-    *Note: You can specify a Python version greater than or equal to 3.10 (e.g., `python=3.11`).*
-3.  **Install dependencies:**
+3.  **Install Dependencies**
     ```bash
     pip install -r requirements.txt
     ```
-4.  **Run the Flask application (Development Server):**
-    From the project root directory (`math2sql/`):
+
+4.  **Run the Web Application**
     ```bash
-    # Set the FLASK_APP environment variable
-    # On Windows (PowerShell)
-    $env:FLASK_APP = "api.app"
-    # On Windows (Command Prompt)
-    set FLASK_APP=api.app
-    # On macOS/Linux
-    export FLASK_APP=api.app
-
-    # Set FLASK_DEBUG for development mode (optional, enables auto-reloading and debugger)
-    # On Windows (PowerShell)
-    $env:FLASK_DEBUG = "1"
-    # On Windows (Command Prompt)
-    set FLASK_DEBUG=1
-    # On macOS/Linux
-    export FLASK_DEBUG=1
-
-    # Run the Flask app
-    flask run
+    # Using the Flask CLI
+    flask --app api.app run
     ```
-    The application will typically be available at `http://127.0.0.1:5000/`.
+    Alternatively, you can set the `FLASK_APP` environment variable first (`export FLASK_APP=api/app.py` or `$env:FLASK_APP="api/app.py"`) and then simply run `flask run`.
 
-    Alternatively, you can directly run `api/app.py` if it's structured to start the server:
-    ```bash
-    python api/app.py
-    ```
-    (Ensure `app.run()` is called within `api/app.py` for this method to work.)
+5.  **Access the Web Interface**
+    Open your browser and navigate to `http://127.0.0.1:5000`.
+
+---
+
+## Usage Example
+
+- **Input Expression**: `sin(x)^2 + cos(y)^2`
+- **Selected Dialect**: `PostgreSQL`
+- **Generated SQL**:
+  ```sql
+  (POWER(SIN(x), 2) + POWER(COS(y), 2))
+  ```
+
+---
+
+## Future Roadmap
+
+-   Support for more advanced mathematical operations (e.g., integrals, derivatives, matrix operations).
+-   Expansion of supported SQL dialects (e.g., SQL Server, Oracle, SQLite).
+-   Implementation of intelligent variable and parameter management.
+-   Comprehensive API documentation and an online demo.
+
+---
 
 ## How to Contribute
 
-(Guidelines to be added)
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](<your-repo-url>/issues).
+
+---
+
+## License
+
+This project is licensed under the MIT License.
